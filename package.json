@@ -1,0 +1,17 @@
+{
+  "name": "electronyiqingxinzeng",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "xiaolajikiki",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --watch main.js --exec electron .",
+    "build": "electron-builder"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^17.2.0",
+    "electron-builder": "^22.14.13",
+    "nodemon": "^2.0.15"
+  }
+}

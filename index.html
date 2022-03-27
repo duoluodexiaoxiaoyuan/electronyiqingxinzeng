@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <title>今日疫情</title>
+    <style>
+      .app-control {
+        /* margin: 0 auto; */
+        text-align: center;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-control">疫情实况</div>
+    <div class="container">
+      <h1 id="title">今日新增</h1>
+      <h1 id="number"></h1>
+    </div>
+    <div>
+      <div>杭州今日新增<span id="hangzhou"></span></div>
+      <div>山西今日新增<span id="shanxi"></span></div>
+      <div>吉林今日新增<span id="jilin"></span></div>
+      <div>香港今日新增<span id="xianggang"></span></div>
+      <div>上海今日新增<span id="shanghai"></span></div>
+    </div>
+    <script>
+      const title = document.querySelector("#title");
+      const number = document.querySelector("#number");
+      const hangzhou = document.querySelector("#hangzhou");
+      const shanxi = document.querySelector("#shanxi");
+      const jilin = document.querySelector("#jilin");
+      const xianggang = document.querySelector("#xianggang");
+      const shanghai = document.querySelector("#shanghai");
+      // 这里写成res.text()就是文本的形式，res.json()就是json的格式
+      fetch(
+        "https://c.m.163.com/ug/api/wuhan/app/data/list-total?t=329668874965"
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.data.chinaTotal.today.confirm);
+          const confirm = res.data.chinaTotal.today.confirm;
+          const hangzhouConfirm =
+            res.data.areaTree[2].children[9].children[3].today.confirm;
+          const shanxiConfirm = res.data.areaTree[2].children[27].today.confirm;
+          const jilinConfirm = res.data.areaTree[2].children[2].today.confirm;
+          const xianggangConfirm =
+            res.data.areaTree[2].children[0].today.confirm;
+          const shanghaiConfirm =
+            res.data.areaTree[2].children[5].today.confirm;
+          number.innerHTML = confirm;
+          hangzhou.innerHTML = hangzhouConfirm;
+          shanxi.innerHTML = shanxiConfirm;
+          jilin.innerHTML = jilinConfirm;
+          xianggang.innerHTML = xianggangConfirm;
+          shanghai.innerHTML = shanghaiConfirm;
+        });
+    </script>
+  </body>
+</html>

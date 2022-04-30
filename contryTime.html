@@ -1,125 +1,102 @@
 <!DOCTYPE html>
 <html>
- 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>获取时区时间</title>
     <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
     <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
     <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
-</head>
- 
-<body>
+  </head>
+
+  <body>
     <div id="example"></div>
     <script type="text/babel">
-        function getCurrentTime(t) {
-            //t为时区参数  默认东八区北京时间
-            if(t===undefined){
-                t=8;
-            }
-            const time = new Date();
-            const len = time.getTime();
-            const offset = time.getTimezoneOffset() * 60000; //本地时间与GMT时间差值
-            const utcTime = len + offset;  //格林尼治时间
- 
- 
-            const date = new Date(utcTime + 3600000 * t); //格林尼治时间和当前时区差值
-            const y = date.getFullYear(),
-                mon = date.getMonth() + 1,
-                d = date.getDate(),
-                h = date.getHours(),
-                m = date.getMinutes(),
-                s = date.getSeconds();
- 
-            //不足两位补0
-            function addZero(value) {
-                if (value < 10) return "0" + value;
-                else return value;
-            }
-            const result = y + "-" + addZero(mon) + "-" + addZero(d) + " " + addZero(h) + ":" + addZero(m) + ":" + addZero(s);
-            return result
- 
+      function getCurrentTime(t) {
+        //t为时区参数  默认东八区北京时间
+        if (t === undefined) {
+          t = 8;
         }
-        
-        
-        //8为东八区北京时间 东区时区1~12 西区时区-1~-12
-        console.log("%c北京时间", "color:red;font-weight:bold;", getCurrentTime());
-        console.log("%c东九区-东京时间" ,"color:green;font-weight:bold;", getCurrentTime(9));
-        console.log("%c西九区-阿拉斯加时间" ,"color:blue;font-weight:bold;", getCurrentTime(-9));
-        console.log("%c英国伦敦" ,"color:blue;font-weight:skyblue;", getCurrentTime(1));
-        console.log("%c美国华盛顿" ,"color:orange;font-weight:skyblue;", getCurrentTime(-5));
-        // setInterval(()=>{
-        //      //8为东八区北京时间 东区时区1~12 西区时区-1~-12
-        //     console.log("%c北京时间", "color:red;font-weight:bold;", getCurrentTime());
-        //     console.log("%c东九区-东京时间" ,"color:green;font-weight:bold;", getCurrentTime(9));
-        //     console.log("%c西九区-阿拉斯加时间" ,"color:blue;font-weight:bold;", getCurrentTime(-9));
-        // },1000)
+        const time = new Date();
+        const len = time.getTime();
+        const offset = time.getTimezoneOffset() * 60000; //本地时间与GMT时间差值
+        const utcTime = len + offset; //格林尼治时间
+        const date = new Date(utcTime + 3600000 * t); //格林尼治时间和当前时区差值
+        const y = date.getFullYear(),
+          mon = date.getMonth() + 1,
+          d = date.getDate(),
+          h = date.getHours(),
+          m = date.getMinutes(),
+          s = date.getSeconds();
+        //不足两位补0
+        function addZero(value) {
+          if (value < 10) return "0" + value;
+          else return value;
+        }
+        const result =
+          y +
+          "-" +
+          addZero(mon) +
+          "-" +
+          addZero(d) +
+          " " +
+          addZero(h) +
+          ":" +
+          addZero(m) +
+          ":" +
+          addZero(s);
+        return result;
+      }
 
-        class AllTime extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    bj : "",
-                    dj : "",
-                    alsj: "",
-                    ld: "",
-                    hsd:""
-                }
-            }
-
-            componentDidMount() {
-                setInterval(() => {
-                  let  bj = getCurrentTime();
-                  let   dj = getCurrentTime(9);
-                  let   alsj =  getCurrentTime(-9);
-                  let  ld =  getCurrentTime(1);
-                  let   hsd =  getCurrentTime(5);
-                  this.setState({bj,dj,alsj,ld,hsd})
-                }, 1000);
-
-            }
-
-            componentWillUnmount() {
-              
-            }
-
-            
-
-            render() {
-                const {bj, dj,alsj,ld,hsd} = this.state;
-                return (
-                    <div>
-                        <div style={{backgroundColor:"skyblue", fontSize:"30px"}}>北京时间: {bj}</div>
-                        <div style={{backgroundColor:"green", fontSize:"30px"}}>东京时间: {dj}</div> 
-                        <div style={{backgroundColor:"pink", fontSize:"30px"}}>阿拉斯加时间: {alsj}</div>
-                        <div style={{backgroundColor:"orange", fontSize:"30px"}}>英国伦敦时间: {ld}</div>
-                        <div style={{backgroundColor:"gray", fontSize:"30px"}}>美国华盛顿时间: {hsd}</div>  
-                    </div>
-                );
-            }
+      class AllTime extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bj: "",
+            dj: "",
+            alsj: "",
+            ld: "",
+            hsd: "",
+          };
         }
 
-        // function AllTime(){
-        //     return (
-        //        <div>
-        //             <div>北京时间:{getCurrentTime()}</div>
-        //             <div>东京时间:{getCurrentTime(9)}</div> 
-        //             <div>阿拉斯加时间:{getCurrentTime(-9)}</div>
-        //             <div>英国伦敦时间:{getCurrentTime(1)}</div>
-        //             <div>美国华盛顿时间:{getCurrentTime(-5)}</div>  
-        //        </div>
-                
-        //     )
-        // }
-        
-        
-        ReactDOM.render(
-            <AllTime/>,
-            document.getElementById('example')
-        );
- 
+        componentDidMount() {
+          setInterval(() => {
+            let bj = getCurrentTime();
+            let dj = getCurrentTime(9);
+            let alsj = getCurrentTime(-9);
+            let ld = getCurrentTime(1);
+            let hsd = getCurrentTime(5);
+            this.setState({ bj, dj, alsj, ld, hsd });
+          }, 1000);
+        }
+
+        componentWillUnmount() {}
+
+        render() {
+          const { bj, dj, alsj, ld, hsd } = this.state;
+          return (
+            <div>
+              <div style={{ backgroundColor: "skyblue", fontSize: "30px" }}>
+                北京时间: {bj}
+              </div>
+              <div style={{ backgroundColor: "green", fontSize: "30px" }}>
+                东京时间: {dj}
+              </div>
+              <div style={{ backgroundColor: "pink", fontSize: "30px" }}>
+                阿拉斯加时间: {alsj}
+              </div>
+              <div style={{ backgroundColor: "orange", fontSize: "30px" }}>
+                英国伦敦时间: {ld}
+              </div>
+              <div style={{ backgroundColor: "gray", fontSize: "30px" }}>
+                美国华盛顿时间: {hsd}
+              </div>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<AllTime />, document.getElementById("example"));
     </script>
-</body>
- 
+  </body>
 </html>

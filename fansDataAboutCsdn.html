@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>获取csdn粉丝数据</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      class FansDataAboutCsdn extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+        search = () => {
+          console.log("查询");
+          axios
+            .get("http://localhost:8080/csdn/getFansData")
+            .then((res) => {
+              console.log(res.data);
+              // let doc = res.data;
+              // console.log(typeof doc);
+              // console.log(doc.querySelector("div"));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+        render() {
+          return (
+            <div>
+              <div>
+                <input type="text" placeholder="请输入你要查询的用户名" />
+                <button onClick={this.search}>查询</button>
+              </div>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <FansDataAboutCsdn />,
+        document.getElementById("example")
+      );
+    </script>
+  </body>
+</html>

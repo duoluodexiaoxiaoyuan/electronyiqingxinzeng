@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
+    <script
+      crossorigin="anonymous"
+      integrity="sha512-1ktr2kdJH3RNHnxw1UMGhmCIdpJwaZe0UIeT5i3tlwYifbAADW8PJDaBZtDLBz7Xsd0LYyaQGbjNe0g2n3JEbg=="
+      src="https://lib.baomitu.com/echarts/5.3.2-rc.1/echarts.common.js"
+    ></script>
+  </head>
+  <body>
+    <button onclick="search()">点击</button>
+    <div id="main"></div>
+    <script>
+      function search() {
+        axios
+          .get("./authorInfomation.json")
+          .then((res) => {
+            console.log(res);
+            var chartDom = document.getElementById("main");
+            var myChart = echarts.init(chartDom);
+            var option;
+            option = {
+              title: {
+                text: "csdn粉丝账户数据变化",
+              },
+              tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                  type: "shadow",
+                },
+              },
+              legend: {},
+              grid: {
+                left: "3%",
+                right: "4%",
+                bottom: "3%",
+                containLabel: true,
+              },
+              xAxis: {
+                type: "value",
+                boundaryGap: [0, 0.01],
+              },
+              yAxis: {
+                type: "category",
+                data: ["fangwenCount", "fensiNum", "paiming", "guanzhu"],
+              },
+              series: [
+                {
+                  name: "作者数据",
+                  type: "bar",
+                  data: [
+                    res.data.fangwenCount,
+                    res.data.fensiNum,
+                    res.data.paiming,
+                    res.data.guanzhu,
+                  ],
+                },
+              ],
+            };
+            option && myChart.setOption(option);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    </script>
+  </body>
+</html>

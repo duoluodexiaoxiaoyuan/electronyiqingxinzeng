@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>计算核酸时间差</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </head>
+  <body>
+    <div>
+      <span>请输入你做核酸的时间:</span>
+      <input class="selector"></input>
+    </div>
+    <div>
+      <span>当前时间:</span>
+      <span class="currentTime"></span>
+    </div>
+    <button onclick="computer()">点击计算时间差</button>
+    <script>
+      let divSelector = document.querySelector(".selector");
+      let selectTime;
+      divSelector.flatpickr({ enableTime: true, dateFormat: "Y-m-d H:i",  onChange: function(selectedDates, dateStr, instance) {
+        selectTime = dateStr;
+      }, });
+      var checkTime = function (i) {
+        if (i < 10) {
+          i = "0" + i;
+        }
+        return i;
+      };
+      var showtime = function () {
+        var nowdate = new Date();
+        var year = nowdate.getFullYear(),
+          month = nowdate.getMonth() + 1,
+          date = nowdate.getDate(),
+          day = nowdate.getDay(),
+          // week我不需要我暂时先把它注释掉
+          // week = [
+          //   "星期日",
+          //   "星期一",
+          //   "星期二",
+          //   "星期三",
+          //   "星期四",
+          //   "星期五",
+          //   "星期六",
+          // ],
+          h = nowdate.getHours(),
+          m = nowdate.getMinutes(),
+          s = nowdate.getSeconds(),
+          h = checkTime(h),
+          m = checkTime(m),
+          s = checkTime(s);
+        return year + "-" + month + "-" + date + " " + h + ":" + m + ":" + s;
+      };
+      let currentTime = document.getElementsByClassName("currentTime");
+      currentTime[0].innerText =showtime();
+      setInterval(() => {
+        let currentTime = document.getElementsByClassName("currentTime");
+        currentTime[0].innerText =showtime();
+      }, 1000);
+
+      function getHour(s1, s2) {
+        var reDate = /\d{4}-\d{1,2}-\d{1,2} /;
+        // test是用了判断s1的格式和regData是否匹配
+        // 里面的正则2018-1-1是不合适的时候会选择它,因为我可以不选择年月日可以直接输入时间也是可以使用的
+        s1 = new Date(
+          (reDate.test(s1) ? s1 : "2018-1-1 " + s1).replace(/-/g, "/")
+        );
+        s2 = new Date(
+          (reDate.test(s2) ? s2 : "2018-1-1 " + s2).replace(/-/g, "/")
+        );
+        var ms = s2.getTime() - s1.getTime();
+        if (ms < 0) return 0;
+        return Math.floor(ms / 1000 / 60 / 60); //小时
+      }
+      
+      function computer(){
+        console.log(selectTime);
+         alert("相差"+getHour(selectTime, currentTime[0].innerText)+"小时");
+      }
+    </script>
+  </body>
+</html>

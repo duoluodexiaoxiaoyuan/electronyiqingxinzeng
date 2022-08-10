@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>做一个显示b站粉丝数目的悬浮框</title>
+    <link rel="stylesheet" href="./css/bilibili.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <meta name="referrer" content="no-referrer">
+</head>
+<body>
+    <div>
+        <p>up主 小垃圾kiki</p>
+        <div>
+            <div>粉丝数</div>
+            <div></div>
+        </div>
+    </div>
+    <script>
+        
+       axios.defaults.withCredentials = true
+       const config = {
+            headers:{
+                'cookie': "buvid3=D8BF08C2-B09F-25CD-2554-B2AE8772846760460infoc; _uuid=68D44E88-0DCF-D4AF-ACE2-40707A9E61FB61294infoc; rpdid=|(u)~m~Yu)l|0J'uYJl|Y)RYk; video_page_version=v_old_home_17; LIVE_BUVID=AUTO1516398075298748; buvid4=64602EFF-A862-AE38-9A4C-2A5879A94EB154524-022012120-zVYRD9eIaXEOqXEmcNXCZQ%3D%3D; buvid_fp_plain=undefined; CURRENT_BLACKGAP=0; hit-dyn-v2=1; nostalgia_conf=2; CURRENT_FNVAL=4048; go_old_video=1; blackside_state=1; fingerprint=d4938e993e5a1138e5ee0aa1a59e3db4; DedeUserID=290513814; DedeUserID__ckMd5=608e77c52912e047; buvid_fp=d4938e993e5a1138e5ee0aa1a59e3db4; b_ut=5; i-wanna-go-back=2; CURRENT_QUALITY=80; bili_jct=002d281eeda3aa9c826b9b8ba999bee5; sid=5840io1l; b_lsid=36E621093_1827D55285F; innersign=1; bp_video_offset_290513814=692013497588908049; PVID=1; bsource=search_bing; b_timer=%7B%22ffp%22%3A%7B%22333.851.fp.risk_D8BF08C2%22%3A%221827D552D59%22%2C%22333.788.fp.risk_D8BF08C2%22%3A%221827D554AA7%22%2C%22444.41.fp.risk_D8BF08C2%22%3A%221827D59068D%22%2C%22444.8.fp.risk_D8BF08C2%22%3A%221827D5929C9%22%2C%22333.999.fp.risk_D8BF08C2%22%3A%221827D595448%22%2C%22333.337.fp.risk_D8BF08C2%22%3A%221827D5CBFFA%22%2C%22777.5.0.0.fp.risk_D8BF08C2%22%3A%221827D7AB073%22%2C%22333.976.fp.risk_D8BF08C2%22%3A%221827D8CD7A6%22%7D%7D",
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "accept-language": "zh-CN,zh;q=0.9",
+                "cache-control": "max-age=0",
+                "sec-ch-ua": "\".Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"103\", \"Chromium\";v=\"103\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"Windows\"",
+                "sec-fetch-dest": "document",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "none",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1" 
+            }
+        };
+        (function(){
+            console.log("你好");
+            axios.get("https://api.bilibili.com/x/relation/stat?vmid=290513814&jsonp=jsonp",config).then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        })()
+    </script>
+</body>
+</html>

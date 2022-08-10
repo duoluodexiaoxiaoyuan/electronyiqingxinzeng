@@ -1,0 +1,11 @@
+body {
+    -webkit-app-region: drag;
+}
+
+div {
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+    opacity: 0.5
+}
+

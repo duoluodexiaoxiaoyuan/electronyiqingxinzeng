@@ -1,0 +1,4 @@
+# electronyiqingxinzeng
+使用electron做的一个查看部分地区疫情的demo
+
+这里其实实现的原理很简单，就是启动electron然后加载html就可以实现了，并没有利用脚手架。
